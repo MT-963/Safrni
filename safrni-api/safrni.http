@@ -1,0 +1,6 @@
+@safrni_HostAddress = http://localhost:5185
+
+GET {{safrni_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
