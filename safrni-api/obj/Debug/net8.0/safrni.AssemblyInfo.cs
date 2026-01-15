@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("safrni")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+69a881449da366e9341c4b210add96e1b0dc782a")]
 [assembly: System.Reflection.AssemblyProductAttribute("safrni")]
 [assembly: System.Reflection.AssemblyTitleAttribute("safrni")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

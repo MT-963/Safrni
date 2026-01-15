@@ -218,22 +218,22 @@ dotnet run
 
 ### 2. Access Swagger UI
 ```
-http://localhost:5000
+http://localhost:5185
 ```
 
 ### 3. Test Endpoints
 Use Swagger UI or any HTTP client:
 ```bash
 # Get all customers
-curl http://localhost:5000/api/customers
+curl http://localhost:5185/api/customers
 
 # Create a customer
-curl -X POST http://localhost:5000/api/customers \
+curl -X POST http://localhost:5185/api/customers \
   -H "Content-Type: application/json" \
   -d '{"fullName":"John Doe","email":"john@example.com"}'
 
 # Get booking details
-curl http://localhost:5000/api/bookings/1
+curl http://localhost:5185/api/bookings/1
 ```
 
 ---

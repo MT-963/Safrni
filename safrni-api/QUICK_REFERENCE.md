@@ -101,7 +101,7 @@ await bookingsApi.create(booking)
 
 ## 🚀 الاختبار السريع
 
-1. افتح API على http://localhost:5000
+1. افتح API على http://localhost:5185
 2. اختبر:
    ```bash
    GET /api/customers/1

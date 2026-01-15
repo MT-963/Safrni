@@ -47,9 +47,13 @@ export interface Booking {
   totalPrice?: number
   notes?: string
   createdAt?: string
-  createdBy?: string
+  createdBy?: number
   updatedAt?: string
-  updatedBy?: string
+  updatedBy?: number
+  totalPriceBase?: number
+  totalPaidBase?: number
+  remainingBase?: number
+  baseCurrencyCode?: string
   customerName?: string
   hotelName?: string
   sellerName?: string
@@ -81,7 +85,10 @@ export interface CreateBooking {
   statusId?: number
   totalPrice?: number
   notes?: string
-  createdBy?: string
+  createdBy?: number
+  rooms?: CreateBookingRoom[]
+  supplierCommissionPercent?: number
+  brokerCommissionPercent?: number
 }
 
 // Payment Types
@@ -94,8 +101,15 @@ export interface Payment {
   paymentMethodId?: number
   paymentDate?: string
   notes?: string
+  rateUsed?: number
+  createdBy?: number
+  updatedBy?: number
+  createdAt?: string
+  updatedAt?: string
   currencyCode?: string
   paymentMethodName?: string
+  amountBase?: number
+  baseCurrencyCode?: string
 }
 
 export interface CreatePayment {
@@ -106,6 +120,8 @@ export interface CreatePayment {
   paymentMethodId?: number
   paymentDate?: string
   notes?: string
+  rateUsed?: number
+  createdBy?: number
 }
 
 // Lookup Types
@@ -146,9 +162,10 @@ export interface PaymentMethod {
 export interface Seller {
   sellerId: number
   name: string
-  email?: string
-  isActive?: boolean
-  createdAt?: string
+  email: string | null
+  role: string // 'Admin' | 'Employee'
+  isActive: number
+  createdAt: string
 }
 
 export interface Broker {
@@ -190,6 +207,15 @@ export interface BookingRoom {
   currencyCode?: string
 }
 
+export interface CreateBookingRoom {
+  roomTypeId?: number
+  viewTypeId?: number
+  mealPlanId?: number
+  roomCount?: number
+  pricePerNight?: number
+  currencyId?: number
+}
+
 export interface Commission {
   commissionId: number
   bookingId?: number
@@ -208,6 +234,78 @@ export interface Extra {
   currencyId?: number
   isGift?: boolean
   currencyCode?: string
+}
+
+// Booking Status History
+export interface BookingStatusHistory {
+  historyId: number
+  bookingId: number
+  oldStatusId?: number
+  newStatusId: number
+  changedAt?: string
+  changedBy?: number
+  reason?: string
+  oldStatusName?: string
+  newStatusName?: string
+  changedByName?: string
+}
+
+export interface CreateBookingStatusHistory {
+  bookingId: number
+  oldStatusId?: number
+  newStatusId: number
+  changedBy?: number
+  reason?: string
+}
+
+// Booking Internal Notes
+export interface BookingInternalNote {
+  noteId: number
+  bookingId: number
+  sellerId: number
+  noteText: string
+  isAdminOnly: number
+  createdAt?: string
+  sellerName?: string
+}
+
+export interface CreateBookingInternalNote {
+  bookingId: number
+  sellerId: number
+  noteText: string
+  isAdminOnly?: number
+}
+
+// Booking Documents
+export interface BookingDocument {
+  documentId: number
+  bookingId: number
+  fileUrl: string
+  fileType?: string
+  uploadedBy: number
+  uploadedAt?: string
+  uploadedByName?: string
+}
+
+export interface CreateBookingDocument {
+  bookingId: number
+  fileUrl: string
+  fileType?: string
+  uploadedBy: number
+}
+
+// Auth Types
+export interface LoginRequest {
+  email: string
+  password: string
+}
+
+export interface LoginResponse {
+  sellerId: number
+  name: string
+  email: string
+  role: string
+  token: string
 }
 
 // Dashboard Stats

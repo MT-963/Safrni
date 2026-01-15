@@ -62,14 +62,14 @@ dotnet run
 ```
 
 ### Access Points
-- **API**: http://localhost:5000
-- **Swagger UI**: http://localhost:5000 (Opens automatically)
+- **API**: http://localhost:5185
+- **Swagger UI**: http://localhost:5185 (Opens automatically)
 - **HTTPS**: https://localhost:5001
 
 ## 📝 Testing the API
 
 ### Using Swagger UI (Recommended)
-1. Navigate to http://localhost:5000
+1. Navigate to http://localhost:5185
 2. Browse all available endpoints
 3. Click "Try it out" on any endpoint
 4. Enter parameters and click "Execute"
@@ -77,12 +77,12 @@ dotnet run
 
 ### Example: Get All Customers
 ```bash
-curl http://localhost:5000/api/customers
+curl http://localhost:5185/api/customers
 ```
 
 ### Example: Create a Customer
 ```bash
-curl -X POST http://localhost:5000/api/customers \
+curl -X POST http://localhost:5185/api/customers \
   -H "Content-Type: application/json" \
   -d '{
     "fullName": "John Doe",
@@ -95,7 +95,7 @@ curl -X POST http://localhost:5000/api/customers \
 
 ### Example: Get Booking with Details
 ```bash
-curl http://localhost:5000/api/bookings/1
+curl http://localhost:5185/api/bookings/1
 ```
 
 ## 📂 Project Structure

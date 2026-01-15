@@ -35,11 +35,11 @@ public partial class Booking
 
     public DateTime? CreatedAt { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public int? UpdatedBy { get; set; }
 
     public virtual ICollection<Bookingroom> Bookingrooms { get; set; } = new List<Bookingroom>();
 
@@ -57,7 +57,17 @@ public partial class Booking
 
     public virtual Seller? Seller { get; set; }
 
+    public virtual Seller? CreatedBySeller { get; set; }
+
+    public virtual Seller? UpdatedBySeller { get; set; }
+
     public virtual Bookingstatus? Status { get; set; }
 
     public virtual Supplier? Supplier { get; set; }
+    
+    public virtual ICollection<BookingInternalNote> InternalNotes { get; set; } = new List<BookingInternalNote>();
+    
+    public virtual ICollection<BookingDocument> Documents { get; set; } = new List<BookingDocument>();
+    
+    public virtual ICollection<BookingstatusHistory> StatusHistories { get; set; } = new List<BookingstatusHistory>();
 }

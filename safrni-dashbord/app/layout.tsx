@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "صفرني - لوحة تحكم إدارة الفنادق",
+  title: "سفرني - لوحة تحكم إدارة الفنادق",
   description: "نظام إدارة وحجز الفنادق",
 };
 

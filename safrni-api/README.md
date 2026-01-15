@@ -133,9 +133,9 @@ dotnet run
 ```
 
 The API will be available at:
-- **HTTP**: `http://localhost:5000`
+- **HTTP**: `http://localhost:5185`
 - **HTTPS**: `https://localhost:5001`
-- **Swagger UI**: `http://localhost:5000` or `https://localhost:5001`
+- **Swagger UI**: `http://localhost:5185` or `https://localhost:5001`
 
 ## 📚 API Endpoints
 

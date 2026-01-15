@@ -24,8 +24,8 @@ public class PaymentRepository : GenericRepository<Payment>, IPaymentRepository
     {
         var total = await _dbSet
             .Where(p => p.BookingId == bookingId)
-            .SumAsync(p => (decimal?)p.Amount);
-        
+            .SumAsync(p => (decimal?)((p.Amount) * (p.RateUsed ?? (p.Currency != null ? p.Currency.RateToEur ?? 1m : 1m))));
+
         return total ?? 0m;
     }
 

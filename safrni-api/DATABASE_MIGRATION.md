@@ -96,13 +96,13 @@ dotnet build
 ### API Endpoints
 ```bash
 # جلب جميع العملاء (لا يحتوي على peopleCount)
-GET http://localhost:5000/api/customers
+GET http://localhost:5185/api/customers
 
 # جلب جميع الحجوزات (يحتوي على peopleCount)
-GET http://localhost:5000/api/bookings
+GET http://localhost:5185/api/bookings
 
 # إنشاء حجز جديد
-POST http://localhost:5000/api/bookings
+POST http://localhost:5185/api/bookings
 {
   "customerId": 1,
   "hotelId": 1,

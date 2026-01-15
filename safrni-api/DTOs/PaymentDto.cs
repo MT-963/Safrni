@@ -10,9 +10,16 @@ public class PaymentDto
     public int? PaymentMethodId { get; set; }
     public DateTime? PaymentDate { get; set; }
     public string? Notes { get; set; }
+    public decimal? RateUsed { get; set; }
+    public int? CreatedBy { get; set; }
+    public int? UpdatedBy { get; set; }
+    public DateTime? CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
     
     public string? CurrencyCode { get; set; }
     public string? PaymentMethodName { get; set; }
+    public decimal? AmountBase { get; set; }
+    public string BaseCurrencyCode { get; set; } = "EUR";
 }
 
 public class CreatePaymentDto
@@ -24,6 +31,8 @@ public class CreatePaymentDto
     public int? PaymentMethodId { get; set; }
     public DateTime? PaymentDate { get; set; }
     public string? Notes { get; set; }
+    public decimal? RateUsed { get; set; }
+    public int? CreatedBy { get; set; }
 }
 
 public class UpdatePaymentDto
@@ -34,5 +43,7 @@ public class UpdatePaymentDto
     public int? PaymentMethodId { get; set; }
     public DateTime? PaymentDate { get; set; }
     public string? Notes { get; set; }
+    public decimal? RateUsed { get; set; }
+    public int? UpdatedBy { get; set; }
 }
 

@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using safrni.DTOs;
 using safrni.Interfaces;
+using System.Security.Claims;
 
 namespace safrni.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class PaymentsController : ControllerBase
 {
     private readonly IPaymentService _paymentService;
@@ -13,6 +16,12 @@ public class PaymentsController : ControllerBase
     public PaymentsController(IPaymentService paymentService)
     {
         _paymentService = paymentService;
+    }
+
+    private int GetCurrentUserId()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        return userIdClaim != null ? int.Parse(userIdClaim.Value) : 0;
     }
 
     [HttpGet]
@@ -61,6 +70,9 @@ public class PaymentsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+        // Set the current user as the creator
+        paymentDto.CreatedBy = GetCurrentUserId();
+
         var payment = await _paymentService.CreatePaymentAsync(paymentDto);
         return CreatedAtAction(nameof(GetPaymentById), new { id = payment.PaymentId }, payment);
     }
@@ -70,6 +82,9 @@ public class PaymentsController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
+
+        // Set the current user as the updater
+        paymentDto.UpdatedBy = GetCurrentUserId();
 
         var success = await _paymentService.UpdatePaymentAsync(id, paymentDto);
         if (!success)

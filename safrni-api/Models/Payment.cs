@@ -21,9 +21,23 @@ public partial class Payment
 
     public string? Notes { get; set; }
 
+    public decimal? RateUsed { get; set; }
+
+    public int? CreatedBy { get; set; }
+
+    public int? UpdatedBy { get; set; }
+
+    public DateTime? CreatedAt { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
+
     public virtual Booking Booking { get; set; } = null!;
 
     public virtual Currency? Currency { get; set; }
 
     public virtual Paymentmethod? PaymentMethod { get; set; }
+
+    public virtual Seller? CreatedBySeller { get; set; }
+
+    public virtual Seller? UpdatedBySeller { get; set; }
 }

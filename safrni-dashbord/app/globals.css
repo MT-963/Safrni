@@ -1,26 +1,408 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================
+   THEME: Light (فاتح)
+   ============================================ */
+:root,
+[data-theme="light"] {
+  /* Background Colors */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-hover: #f1f5f9;
+  --bg-active: #e2e8f0;
+  
+  /* Sidebar */
+  --sidebar-bg: #1e293b;
+  --sidebar-border: #334155;
+  --sidebar-text: #e2e8f0;
+  --sidebar-text-muted: #94a3b8;
+  --sidebar-hover: #334155;
+  --sidebar-active: #3b82f6;
+  
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+  
+  /* Accent Colors */
+  --accent-primary: #3b82f6;
+  --accent-primary-hover: #2563eb;
+  --accent-primary-light: #dbeafe;
+  --accent-secondary: #8b5cf6;
+  --accent-success: #10b981;
+  --accent-success-light: #d1fae5;
+  --accent-warning: #f59e0b;
+  --accent-warning-light: #fef3c7;
+  --accent-danger: #ef4444;
+  --accent-danger-light: #fee2e2;
+  --accent-info: #06b6d4;
+  --accent-info-light: #cffafe;
+  
+  /* Numbers & Stats */
+  --number-positive: #059669;
+  --number-negative: #dc2626;
+  --number-neutral: #0f172a;
+  --stat-bg: #f0f9ff;
+  
+  /* Border Colors */
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e1;
+  --border-focus: #3b82f6;
+  
+  /* Card & Shadow */
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --card-shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  
+  /* Input */
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-text: #1f2937;
+  --input-placeholder: #9ca3af;
+  
+  /* Table */
+  --table-header-bg: #f9fafb;
+  --table-row-hover: #f9fafb;
+  --table-border: #e5e7eb;
+  
+  /* Admin */
+  --admin-accent: #eab308;
+  --admin-bg: rgba(234, 179, 8, 0.1);
 }
 
+/* ============================================
+   THEME: Dark (داكن)
+   ============================================ */
+[data-theme="dark"] {
+  /* Background Colors */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: #1e293b;
+  --bg-hover: #334155;
+  --bg-active: #475569;
+  
+  /* Sidebar */
+  --sidebar-bg: #0f172a;
+  --sidebar-border: #1e293b;
+  --sidebar-text: #e2e8f0;
+  --sidebar-text-muted: #94a3b8;
+  --sidebar-hover: #1e293b;
+  --sidebar-active: #6366f1;
+  
+  /* Text Colors */
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+  
+  /* Accent Colors */
+  --accent-primary: #6366f1;
+  --accent-primary-hover: #818cf8;
+  --accent-primary-light: rgba(99, 102, 241, 0.2);
+  --accent-secondary: #a78bfa;
+  --accent-success: #34d399;
+  --accent-success-light: rgba(52, 211, 153, 0.2);
+  --accent-warning: #fbbf24;
+  --accent-warning-light: rgba(251, 191, 36, 0.2);
+  --accent-danger: #f87171;
+  --accent-danger-light: rgba(248, 113, 113, 0.2);
+  --accent-info: #22d3ee;
+  --accent-info-light: rgba(34, 211, 238, 0.2);
+  
+  /* Numbers & Stats */
+  --number-positive: #4ade80;
+  --number-negative: #f87171;
+  --number-neutral: #f1f5f9;
+  --stat-bg: rgba(99, 102, 241, 0.1);
+  
+  /* Border Colors */
+  --border-primary: #334155;
+  --border-secondary: #475569;
+  --border-focus: #6366f1;
+  
+  /* Card & Shadow */
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --card-shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  
+  /* Input */
+  --input-bg: #1e293b;
+  --input-border: #475569;
+  --input-text: #f1f5f9;
+  --input-placeholder: #64748b;
+  
+  /* Table */
+  --table-header-bg: #1e293b;
+  --table-row-hover: #334155;
+  --table-border: #334155;
+  
+  /* Admin */
+  --admin-accent: #fbbf24;
+  --admin-bg: rgba(251, 191, 36, 0.15);
+}
+
+/* ============================================
+   THEME: Ocean (محيط)
+   ============================================ */
+[data-theme="ocean"] {
+  /* Background Colors */
+  --bg-primary: #0c1929;
+  --bg-secondary: #0f2744;
+  --bg-tertiary: #163a5f;
+  --bg-card: #0f2744;
+  --bg-hover: #163a5f;
+  --bg-active: #1d4e79;
+  
+  /* Sidebar */
+  --sidebar-bg: #071320;
+  --sidebar-border: #0c1929;
+  --sidebar-text: #bfe4ff;
+  --sidebar-text-muted: #5ba3d9;
+  --sidebar-hover: #0c1929;
+  --sidebar-active: #0ea5e9;
+  
+  /* Text Colors */
+  --text-primary: #e0f2fe;
+  --text-secondary: #7dd3fc;
+  --text-muted: #38bdf8;
+  --text-inverse: #0c1929;
+  
+  /* Accent Colors */
+  --accent-primary: #0ea5e9;
+  --accent-primary-hover: #38bdf8;
+  --accent-primary-light: rgba(14, 165, 233, 0.2);
+  --accent-secondary: #06b6d4;
+  --accent-success: #2dd4bf;
+  --accent-success-light: rgba(45, 212, 191, 0.2);
+  --accent-warning: #fcd34d;
+  --accent-warning-light: rgba(252, 211, 77, 0.2);
+  --accent-danger: #fb7185;
+  --accent-danger-light: rgba(251, 113, 133, 0.2);
+  --accent-info: #67e8f9;
+  --accent-info-light: rgba(103, 232, 249, 0.2);
+  
+  /* Numbers & Stats */
+  --number-positive: #5eead4;
+  --number-negative: #fda4af;
+  --number-neutral: #e0f2fe;
+  --stat-bg: rgba(14, 165, 233, 0.15);
+  
+  /* Border Colors */
+  --border-primary: #163a5f;
+  --border-secondary: #1d4e79;
+  --border-focus: #0ea5e9;
+  
+  /* Card & Shadow */
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --card-shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  
+  /* Input */
+  --input-bg: #0f2744;
+  --input-border: #1d4e79;
+  --input-text: #e0f2fe;
+  --input-placeholder: #5ba3d9;
+  
+  /* Table */
+  --table-header-bg: #0c1929;
+  --table-row-hover: #163a5f;
+  --table-border: #163a5f;
+  
+  /* Admin */
+  --admin-accent: #fcd34d;
+  --admin-bg: rgba(252, 211, 77, 0.15);
+}
+
+/* ============================================
+   THEME: Sunset (غروب)
+   ============================================ */
+[data-theme="sunset"] {
+  /* Background Colors */
+  --bg-primary: #1a0f0a;
+  --bg-secondary: #2d1810;
+  --bg-tertiary: #3d251a;
+  --bg-card: #2d1810;
+  --bg-hover: #3d251a;
+  --bg-active: #4d3020;
+  
+  /* Sidebar */
+  --sidebar-bg: #120806;
+  --sidebar-border: #1a0f0a;
+  --sidebar-text: #fed7aa;
+  --sidebar-text-muted: #c98b5f;
+  --sidebar-hover: #1a0f0a;
+  --sidebar-active: #f97316;
+  
+  /* Text Colors */
+  --text-primary: #fff7ed;
+  --text-secondary: #fed7aa;
+  --text-muted: #fdba74;
+  --text-inverse: #1a0f0a;
+  
+  /* Accent Colors */
+  --accent-primary: #f97316;
+  --accent-primary-hover: #fb923c;
+  --accent-primary-light: rgba(249, 115, 22, 0.2);
+  --accent-secondary: #f59e0b;
+  --accent-success: #84cc16;
+  --accent-success-light: rgba(132, 204, 22, 0.2);
+  --accent-warning: #facc15;
+  --accent-warning-light: rgba(250, 204, 21, 0.2);
+  --accent-danger: #ef4444;
+  --accent-danger-light: rgba(239, 68, 68, 0.2);
+  --accent-info: #a3e635;
+  --accent-info-light: rgba(163, 230, 53, 0.2);
+  
+  /* Numbers & Stats */
+  --number-positive: #bef264;
+  --number-negative: #fca5a5;
+  --number-neutral: #fff7ed;
+  --stat-bg: rgba(249, 115, 22, 0.15);
+  
+  /* Border Colors */
+  --border-primary: #3d251a;
+  --border-secondary: #4d3020;
+  --border-focus: #f97316;
+  
+  /* Card & Shadow */
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --card-shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  
+  /* Input */
+  --input-bg: #2d1810;
+  --input-border: #4d3020;
+  --input-text: #fff7ed;
+  --input-placeholder: #c98b5f;
+  
+  /* Table */
+  --table-header-bg: #1a0f0a;
+  --table-row-hover: #3d251a;
+  --table-border: #3d251a;
+  
+  /* Admin */
+  --admin-accent: #facc15;
+  --admin-bg: rgba(250, 204, 21, 0.15);
+}
+
+/* ============================================
+   THEME: Emerald (زمردي)
+   ============================================ */
+[data-theme="emerald"] {
+  /* Background Colors */
+  --bg-primary: #022c22;
+  --bg-secondary: #064e3b;
+  --bg-tertiary: #065f46;
+  --bg-card: #064e3b;
+  --bg-hover: #065f46;
+  --bg-active: #047857;
+  
+  /* Sidebar */
+  --sidebar-bg: #011e17;
+  --sidebar-border: #022c22;
+  --sidebar-text: #a7f3d0;
+  --sidebar-text-muted: #34d399;
+  --sidebar-hover: #022c22;
+  --sidebar-active: #10b981;
+  
+  /* Text Colors */
+  --text-primary: #ecfdf5;
+  --text-secondary: #a7f3d0;
+  --text-muted: #6ee7b7;
+  --text-inverse: #022c22;
+  
+  /* Accent Colors */
+  --accent-primary: #10b981;
+  --accent-primary-hover: #34d399;
+  --accent-primary-light: rgba(16, 185, 129, 0.2);
+  --accent-secondary: #14b8a6;
+  --accent-success: #22c55e;
+  --accent-success-light: rgba(34, 197, 94, 0.2);
+  --accent-warning: #fbbf24;
+  --accent-warning-light: rgba(251, 191, 36, 0.2);
+  --accent-danger: #f87171;
+  --accent-danger-light: rgba(248, 113, 113, 0.2);
+  --accent-info: #2dd4bf;
+  --accent-info-light: rgba(45, 212, 191, 0.2);
+  
+  /* Numbers & Stats */
+  --number-positive: #4ade80;
+  --number-negative: #fca5a5;
+  --number-neutral: #ecfdf5;
+  --stat-bg: rgba(16, 185, 129, 0.15);
+  
+  /* Border Colors */
+  --border-primary: #065f46;
+  --border-secondary: #047857;
+  --border-focus: #10b981;
+  
+  /* Card & Shadow */
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --card-shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  
+  /* Input */
+  --input-bg: #064e3b;
+  --input-border: #047857;
+  --input-text: #ecfdf5;
+  --input-placeholder: #34d399;
+  
+  /* Table */
+  --table-header-bg: #022c22;
+  --table-row-hover: #065f46;
+  --table-border: #065f46;
+  
+  /* Admin */
+  --admin-accent: #fbbf24;
+  --admin-bg: rgba(251, 191, 36, 0.15);
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Smooth theme transitions */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Selection styling */
+::selection {
+  background: var(--accent-primary);
+  color: var(--text-inverse);
 }

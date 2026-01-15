@@ -20,6 +20,10 @@ public class BookingDto
     public string? CreatedBy { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public string? UpdatedBy { get; set; }
+    public decimal? TotalPriceBase { get; set; }
+    public decimal? TotalPaidBase { get; set; }
+    public decimal? RemainingBase { get; set; }
+    public string BaseCurrencyCode { get; set; } = "EUR";
     
     // Navigation Properties
     public string? CustomerName { get; set; }
@@ -45,7 +49,14 @@ public class CreateBookingDto
     public int? StatusId { get; set; }
     public decimal? TotalPrice { get; set; }
     public string? Notes { get; set; }
-    public string? CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
+    
+    // Rooms
+    public List<CreateBookingRoomDto>? Rooms { get; set; }
+
+    // Commission overrides (percent value e.g. 10 = 10%)
+    public decimal? SupplierCommissionPercent { get; set; }
+    public decimal? BrokerCommissionPercent { get; set; }
 }
 
 public class UpdateBookingDto
@@ -63,7 +74,14 @@ public class UpdateBookingDto
     public int? StatusId { get; set; }
     public decimal? TotalPrice { get; set; }
     public string? Notes { get; set; }
-    public string? UpdatedBy { get; set; }
+    public int? UpdatedBy { get; set; }
+
+    // Rooms
+    public List<UpdateBookingRoomDto>? Rooms { get; set; }
+
+    // Commission overrides (percent value e.g. 10 = 10%)
+    public decimal? SupplierCommissionPercent { get; set; }
+    public decimal? BrokerCommissionPercent { get; set; }
 }
 
 public class BookingDetailDto
@@ -77,9 +95,9 @@ public class BookingDetailDto
     public decimal? TotalPrice { get; set; }
     public string? Notes { get; set; }
     public DateTime? CreatedAt { get; set; }
-    public string? CreatedBy { get; set; }
+    public int? CreatedBy { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    public string? UpdatedBy { get; set; }
+    public int? UpdatedBy { get; set; }
     
     public CustomerDto? Customer { get; set; }
     public HotelDto? Hotel { get; set; }
@@ -91,5 +109,24 @@ public class BookingDetailDto
     public List<PaymentDto>? Payments { get; set; }
     public List<CommissionDto>? Commissions { get; set; }
     public List<ExtraDto>? Extras { get; set; }
+
+    public decimal? TotalPriceBase { get; set; }
+    public decimal? TotalPaidBase { get; set; }
+    public decimal? RemainingBase { get; set; }
+    public string BaseCurrencyCode { get; set; } = "EUR";
+}
+
+public class CreateBookingRoomDto
+{
+    public int? RoomTypeId { get; set; }
+    public int? ViewTypeId { get; set; }
+    public int? MealPlanId { get; set; }
+    public int? RoomCount { get; set; }
+    public decimal? PricePerNight { get; set; }
+    public int? CurrencyId { get; set; }
+}
+
+public class UpdateBookingRoomDto : CreateBookingRoomDto
+{
 }
 

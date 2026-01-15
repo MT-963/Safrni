@@ -309,7 +309,7 @@ export default function HotelsPage() {
     return (
       <div className="flex items-center gap-1">
         {[...Array(rating)].map((_, i) => (
-          <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+          <Star key={i} className="h-4 w-4 fill-yellow-700 text-yellow-700" />
         ))}
       </div>
     )
@@ -435,7 +435,7 @@ export default function HotelsPage() {
                 </div>
                 <div className="flex">
                   {[...Array(rating)].map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                    <Star key={i} className="h-3 w-3 fill-yellow-700 text-yellow-700" />
                   ))}
                 </div>
               </div>
@@ -460,7 +460,7 @@ export default function HotelsPage() {
                 البحث بالاسم
               </label>
               <div className="relative">
-                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-700" />
                 <Input
                   placeholder="ابحث عن فندق..."
                   value={searchTerm}
@@ -544,7 +544,7 @@ export default function HotelsPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200">
+                <tr className="border-b border-gray-600">
                   <th className="text-right py-3 px-4 font-medium text-gray-700">الرقم</th>
                   <th className="text-right py-3 px-4 font-medium text-gray-700">اسم الفندق</th>
                   <th className="text-right py-3 px-4 font-medium text-gray-700">المدينة</th>
@@ -607,7 +607,7 @@ export default function HotelsPage() {
               <h2 className="text-xl font-bold text-gray-900">إضافة فندق جديد</h2>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-700 hover:text-gray-600 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -674,12 +674,12 @@ export default function HotelsPage() {
                       onClick={() => setFormData({ ...formData, starRating: rating })}
                       className={`flex items-center gap-1 px-3 py-2 rounded border transition-colors ${
                         formData.starRating === rating
-                          ? 'bg-yellow-50 border-yellow-400 text-yellow-700'
-                          : 'bg-white border-gray-300 text-gray-600 hover:border-yellow-300'
+                          ? 'bg-yellow-50 border-yellow-700 text-yellow-700'
+                          : 'bg-white border-gray-700 text-gray-600 hover:border-yellow-700'
                       }`}
                     >
                       {rating}
-                      <Star className={`h-4 w-4 ${formData.starRating === rating ? 'fill-yellow-400 text-yellow-400' : ''}`} />
+                      <Star className={`h-4 w-4 ${formData.starRating === rating ? 'fill-yellow-700 text-yellow-700' : ''}`} />
                     </button>
                   ))}
                 </div>
@@ -718,7 +718,7 @@ export default function HotelsPage() {
                   setShowEditModal(false)
                   setEditingHotel(null)
                 }}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-700 hover:text-gray-600 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -785,12 +785,12 @@ export default function HotelsPage() {
                       onClick={() => setFormData({ ...formData, starRating: rating })}
                       className={`flex items-center gap-1 px-3 py-2 rounded border transition-colors ${
                         formData.starRating === rating
-                          ? 'bg-yellow-50 border-yellow-400 text-yellow-700'
-                          : 'bg-white border-gray-300 text-gray-600 hover:border-yellow-300'
+                          ? 'bg-yellow-50 border-yellow-700 text-yellow-700'
+                          : 'bg-white border-gray-700 text-gray-600 hover:border-yellow-700'
                       }`}
                     >
                       {rating}
-                      <Star className={`h-4 w-4 ${formData.starRating === rating ? 'fill-yellow-400 text-yellow-400' : ''}`} />
+                      <Star className={`h-4 w-4 ${formData.starRating === rating ? 'fill-yellow-700 text-yellow-700' : ''}`} />
                     </button>
                   ))}
                 </div>
@@ -823,3 +823,4 @@ export default function HotelsPage() {
     </div>
   )
 }
+

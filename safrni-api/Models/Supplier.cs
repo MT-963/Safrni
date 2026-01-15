@@ -16,6 +16,4 @@ public partial class Supplier
     public string? Country { get; set; }
 
     public string? City { get; set; }
-
-    public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 }

@@ -14,26 +14,13 @@ public class BookingRepository : GenericRepository<Booking>, IBookingRepository
     public async Task<IEnumerable<Booking>> GetBookingsWithDetailsAsync()
     {
         return await _dbSet
+            .AsNoTracking()
             .Include(b => b.Customer)
             .Include(b => b.Hotel)
             .Include(b => b.Seller)
             .Include(b => b.Supplier)
             .Include(b => b.Broker)
             .Include(b => b.Status)
-            .Include(b => b.Bookingrooms)
-                .ThenInclude(br => br.RoomType)
-            .Include(b => b.Bookingrooms)
-                .ThenInclude(br => br.ViewType)
-            .Include(b => b.Bookingrooms)
-                .ThenInclude(br => br.MealPlan)
-            .Include(b => b.Bookingrooms)
-                .ThenInclude(br => br.Currency)
-            .Include(b => b.Payments)
-                .ThenInclude(p => p.PaymentMethod)
-            .Include(b => b.Payments)
-                .ThenInclude(p => p.Currency)
-            .Include(b => b.Commissions)
-            .Include(b => b.Extras)
             .ToListAsync();
     }
 

@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using safrni.DTOs;
 using safrni.Interfaces;
+using System.Security.Claims;
 
 namespace safrni.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class BookingsController : ControllerBase
 {
     private readonly IBookingService _bookingService;
@@ -13,6 +16,12 @@ public class BookingsController : ControllerBase
     public BookingsController(IBookingService bookingService)
     {
         _bookingService = bookingService;
+    }
+
+    private int GetCurrentUserId()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        return userIdClaim != null ? int.Parse(userIdClaim.Value) : 0;
     }
 
     [HttpGet]
@@ -68,6 +77,9 @@ public class BookingsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+        // Set the current user as the creator
+        bookingDto.CreatedBy = GetCurrentUserId();
+
         var booking = await _bookingService.CreateBookingAsync(bookingDto);
         return CreatedAtAction(nameof(GetBookingById), new { id = booking.BookingId }, booking);
     }
@@ -77,6 +89,9 @@ public class BookingsController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
+
+        // Set the current user as the updater
+        bookingDto.UpdatedBy = GetCurrentUserId();
 
         var success = await _bookingService.UpdateBookingAsync(id, bookingDto);
         if (!success)

@@ -178,7 +178,7 @@ export default function CustomersPage() {
         <CardHeader>
           <div className="flex items-center gap-4">
             <div className="relative flex-1">
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-700" />
               <Input
                 placeholder="ابحث عن عميل..."
                 value={searchTerm}
@@ -192,7 +192,7 @@ export default function CustomersPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200">
+                <tr className="border-b border-gray-600">
                   <th className="text-right py-3 px-4 font-medium text-gray-700">الرقم</th>
                   <th className="text-right py-3 px-4 font-medium text-gray-700">الاسم الكامل</th>
                   <th className="text-right py-3 px-4 font-medium text-gray-700">البريد الإلكتروني</th>
@@ -215,13 +215,13 @@ export default function CustomersPage() {
                       <td className="py-3 px-4 font-medium">{customer.fullName}</td>
                       <td className="py-3 px-4 text-gray-600">
                         <div className="flex items-center gap-2">
-                          <Mail className="h-4 w-4 text-gray-400" />
+                          <Mail className="h-4 w-4 text-gray-700" />
                           {customer.email || 'غير محدد'}
                         </div>
                       </td>
                       <td className="py-3 px-4 text-gray-600">
                         <div className="flex items-center gap-2">
-                          <Phone className="h-4 w-4 text-gray-400" />
+                          <Phone className="h-4 w-4 text-gray-700" />
                           {customer.phone || 'غير محدد'}
                         </div>
                       </td>
@@ -271,7 +271,7 @@ export default function CustomersPage() {
               <h2 className="text-xl font-bold text-gray-900">إضافة عميل جديد</h2>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-700 hover:text-gray-600 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -362,7 +362,7 @@ export default function CustomersPage() {
                   setShowEditModal(false)
                   setEditingCustomer(null)
                 }}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-700 hover:text-gray-600 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -447,3 +447,4 @@ export default function CustomersPage() {
     </div>
   )
 }
+

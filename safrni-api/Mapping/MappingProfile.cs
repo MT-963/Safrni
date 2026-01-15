@@ -39,6 +39,10 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.Payments, opt => opt.MapFrom(src => src.Payments))
             .ForMember(dest => dest.Commissions, opt => opt.MapFrom(src => src.Commissions))
             .ForMember(dest => dest.Extras, opt => opt.MapFrom(src => src.Extras));
+        CreateMap<CreateBookingRoomDto, Bookingroom>()
+            .ForMember(dest => dest.RoomCount, opt => opt.MapFrom(src => src.RoomCount ?? 1));
+        CreateMap<UpdateBookingRoomDto, Bookingroom>()
+            .ForMember(dest => dest.RoomCount, opt => opt.MapFrom(src => src.RoomCount ?? 1));
 
         // Hotel mappings
         CreateMap<Hotel, HotelDto>().ReverseMap();
@@ -48,9 +52,14 @@ public class MappingProfile : Profile
         // Payment mappings
         CreateMap<Payment, PaymentDto>()
             .ForMember(dest => dest.CurrencyCode, opt => opt.MapFrom(src => src.Currency != null ? src.Currency.Code : null))
-            .ForMember(dest => dest.PaymentMethodName, opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.Name : null));
-        CreateMap<CreatePaymentDto, Payment>();
-        CreateMap<UpdatePaymentDto, Payment>();
+            .ForMember(dest => dest.PaymentMethodName, opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.Name : null))
+            .ForMember(dest => dest.AmountBase, opt => opt.MapFrom(src =>
+                (src.Amount) * (src.RateUsed ?? (src.Currency != null ? src.Currency.RateToEur ?? 1 : 1))))
+            .ForMember(dest => dest.BaseCurrencyCode, opt => opt.MapFrom(_ => "EUR"));
+        CreateMap<CreatePaymentDto, Payment>()
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now));
+        CreateMap<UpdatePaymentDto, Payment>()
+            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.Now));
 
         // Seller mappings
         CreateMap<Seller, SellerDto>().ReverseMap();
@@ -106,6 +115,27 @@ public class MappingProfile : Profile
         // Extra mappings
         CreateMap<Extra, ExtraDto>()
             .ForMember(dest => dest.CurrencyCode, opt => opt.MapFrom(src => src.Currency != null ? src.Currency.Code : null));
+
+        // BookingStatusHistory mappings
+        CreateMap<BookingstatusHistory, BookingStatusHistoryDto>()
+            .ForMember(dest => dest.OldStatusName, opt => opt.MapFrom(src => src.OldStatus != null ? src.OldStatus.NameEn : null))
+            .ForMember(dest => dest.NewStatusName, opt => opt.MapFrom(src => src.NewStatus != null ? src.NewStatus.NameEn : null))
+            .ForMember(dest => dest.ChangedByName, opt => opt.MapFrom(src => src.ChangedBySeller != null ? src.ChangedBySeller.Name : null));
+        CreateMap<CreateBookingStatusHistoryDto, BookingstatusHistory>()
+            .ForMember(dest => dest.ChangedAt, opt => opt.MapFrom(src => DateTime.Now));
+
+        // BookingInternalNote mappings
+        CreateMap<BookingInternalNote, BookingInternalNoteDto>()
+            .ForMember(dest => dest.SellerName, opt => opt.MapFrom(src => src.Seller != null ? src.Seller.Name : null));
+        CreateMap<CreateBookingInternalNoteDto, BookingInternalNote>()
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now));
+        CreateMap<UpdateBookingInternalNoteDto, BookingInternalNote>();
+
+        // BookingDocument mappings
+        CreateMap<BookingDocument, BookingDocumentDto>()
+            .ForMember(dest => dest.UploadedByName, opt => opt.MapFrom(src => src.UploadedBySeller != null ? src.UploadedBySeller.Name : null));
+        CreateMap<CreateBookingDocumentDto, BookingDocument>()
+            .ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => DateTime.Now));
     }
 }
 

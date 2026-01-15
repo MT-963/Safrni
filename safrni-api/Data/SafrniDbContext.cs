@@ -23,6 +23,12 @@ public partial class SafrniDbContext : DbContext
 
     public virtual DbSet<Bookingstatus> Bookingstatuses { get; set; }
 
+    public virtual DbSet<BookingstatusHistory> BookingstatusHistories { get; set; }
+
+    public virtual DbSet<BookingInternalNote> BookingInternalNotes { get; set; }
+
+    public virtual DbSet<BookingDocument> BookingDocuments { get; set; }
+
     public virtual DbSet<Broker> Brokers { get; set; }
 
     public virtual DbSet<Commission> Commissions { get; set; }
@@ -85,7 +91,7 @@ public partial class SafrniDbContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime");
-            entity.Property(e => e.CreatedBy).HasMaxLength(150);
+            entity.Property(e => e.CreatedBy).HasColumnName("CreatedBy");
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.HotelConfirmationCode).HasMaxLength(100);
             entity.Property(e => e.HotelId).HasColumnName("HotelID");
@@ -99,7 +105,7 @@ public partial class SafrniDbContext : DbContext
             entity.Property(e => e.UpdatedAt)
                 .ValueGeneratedOnAddOrUpdate()
                 .HasColumnType("datetime");
-            entity.Property(e => e.UpdatedBy).HasMaxLength(150);
+            entity.Property(e => e.UpdatedBy).HasColumnName("UpdatedBy");
 
             entity.HasOne(d => d.Broker).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.BrokerId)
@@ -119,11 +125,21 @@ public partial class SafrniDbContext : DbContext
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_bookings_sellers");
 
+            entity.HasOne(d => d.CreatedBySeller).WithMany(p => p.BookingsCreated)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_booking_created_by");
+
+            entity.HasOne(d => d.UpdatedBySeller).WithMany(p => p.BookingsUpdated)
+                .HasForeignKey(d => d.UpdatedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_booking_updated_by");
+
             entity.HasOne(d => d.Status).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.StatusId)
                 .HasConstraintName("bookings_ibfk_5");
 
-            entity.HasOne(d => d.Supplier).WithMany(p => p.Bookings)
+            entity.HasOne(d => d.Supplier).WithMany()
                 .HasForeignKey(d => d.SupplierId)
                 .HasConstraintName("bookings_ibfk_2");
         });
@@ -217,7 +233,7 @@ public partial class SafrniDbContext : DbContext
             entity.Property(e => e.BookingId).HasColumnName("BookingID");
             entity.Property(e => e.CurrencyId).HasColumnName("CurrencyID");
             entity.Property(e => e.Percent).HasPrecision(5, 2);
-            entity.Property(e => e.Source).HasColumnType("enum('Hotel','Agent','Internal')");
+            entity.Property(e => e.Source).HasColumnType("enum('Hotel','Agent','Internal','Supplier','Broker')");
 
             entity.HasOne(d => d.Booking).WithMany(p => p.Commissions)
                 .HasForeignKey(d => d.BookingId)
@@ -274,6 +290,12 @@ public partial class SafrniDbContext : DbContext
                 .HasDefaultValueSql("'0'")
                 .HasColumnType("tinyint(1)");
             entity.Property(e => e.Price).HasPrecision(10, 2);
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+            entity.Property(e => e.UpdatedAt)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.Booking).WithMany(p => p.Extras)
                 .HasForeignKey(d => d.BookingId)
@@ -282,6 +304,16 @@ public partial class SafrniDbContext : DbContext
             entity.HasOne(d => d.Currency).WithMany(p => p.Extras)
                 .HasForeignKey(d => d.CurrencyId)
                 .HasConstraintName("extras_ibfk_2");
+
+            entity.HasOne(d => d.CreatedBySeller).WithMany()
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_extra_created_by");
+
+            entity.HasOne(d => d.UpdatedBySeller).WithMany()
+                .HasForeignKey(d => d.UpdatedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_extra_updated_by");
         });
 
         modelBuilder.Entity<Hotel>(entity =>
@@ -330,6 +362,13 @@ public partial class SafrniDbContext : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.PaymentMethodId).HasColumnName("PaymentMethodID");
             entity.Property(e => e.PaymentType).HasColumnType("enum('Deposit','Remaining','TransferCost','Commission')");
+            entity.Property(e => e.RateUsed).HasPrecision(10, 4);
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+            entity.Property(e => e.UpdatedAt)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.Booking).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.BookingId)
@@ -342,6 +381,16 @@ public partial class SafrniDbContext : DbContext
             entity.HasOne(d => d.PaymentMethod).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.PaymentMethodId)
                 .HasConstraintName("payments_ibfk_3");
+
+            entity.HasOne(d => d.CreatedBySeller).WithMany()
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_payment_created_by");
+
+            entity.HasOne(d => d.UpdatedBySeller).WithMany()
+                .HasForeignKey(d => d.UpdatedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_payment_updated_by");
         });
 
         modelBuilder.Entity<PaymentCategory>(entity =>
@@ -388,15 +437,117 @@ public partial class SafrniDbContext : DbContext
 
             entity.ToTable("sellers");
 
+            entity.HasIndex(e => e.Email, "unique_email").IsUnique();
+
             entity.Property(e => e.SellerId).HasColumnName("SellerID");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(150);
+            entity.Property(e => e.PasswordHash).HasMaxLength(255);
+            entity.Property(e => e.Role)
+                .HasColumnType("enum('Admin','Employee')")
+                .HasDefaultValueSql("'Employee'");
             entity.Property(e => e.IsActive)
                 .HasDefaultValueSql("'1'")
                 .HasColumnType("tinyint(1)");
             entity.Property(e => e.Name).HasMaxLength(150);
+        });
+
+        modelBuilder.Entity<BookingstatusHistory>(entity =>
+        {
+            entity.HasKey(e => e.HistoryId).HasName("PRIMARY");
+
+            entity.ToTable("bookingstatus_history");
+
+            entity.HasIndex(e => e.BookingId, "BookingID");
+            entity.HasIndex(e => e.OldStatusId, "OldStatusID");
+            entity.HasIndex(e => e.NewStatusId, "NewStatusID");
+            entity.HasIndex(e => e.ChangedBy, "ChangedBy");
+
+            entity.Property(e => e.HistoryId).HasColumnName("HistoryID");
+            entity.Property(e => e.BookingId).HasColumnName("BookingID");
+            entity.Property(e => e.OldStatusId).HasColumnName("OldStatusID");
+            entity.Property(e => e.NewStatusId).HasColumnName("NewStatusID");
+            entity.Property(e => e.ChangedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Reason).HasMaxLength(255);
+
+            entity.HasOne(d => d.Booking).WithMany(p => p.StatusHistories)
+                .HasForeignKey(d => d.BookingId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_status_history_booking");
+
+            entity.HasOne(d => d.OldStatus).WithMany()
+                .HasForeignKey(d => d.OldStatusId)
+                .HasConstraintName("fk_status_history_old");
+
+            entity.HasOne(d => d.NewStatus).WithMany()
+                .HasForeignKey(d => d.NewStatusId)
+                .HasConstraintName("fk_status_history_new");
+
+            entity.HasOne(d => d.ChangedBySeller).WithMany(p => p.StatusHistories)
+                .HasForeignKey(d => d.ChangedBy)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_status_history_seller");
+        });
+
+        modelBuilder.Entity<BookingInternalNote>(entity =>
+        {
+            entity.HasKey(e => e.NoteId).HasName("PRIMARY");
+
+            entity.ToTable("booking_internal_notes");
+
+            entity.HasIndex(e => e.BookingId, "BookingID");
+            entity.HasIndex(e => e.SellerId, "SellerID");
+
+            entity.Property(e => e.NoteId).HasColumnName("NoteID");
+            entity.Property(e => e.BookingId).HasColumnName("BookingID");
+            entity.Property(e => e.SellerId).HasColumnName("SellerID");
+            entity.Property(e => e.NoteText).HasColumnType("text");
+            entity.Property(e => e.IsAdminOnly)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("tinyint(1)");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.Booking).WithMany(p => p.InternalNotes)
+                .HasForeignKey(d => d.BookingId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_note_booking");
+
+            entity.HasOne(d => d.Seller).WithMany(p => p.InternalNotes)
+                .HasForeignKey(d => d.SellerId)
+                .HasConstraintName("fk_note_seller");
+        });
+
+        modelBuilder.Entity<BookingDocument>(entity =>
+        {
+            entity.HasKey(e => e.DocumentId).HasName("PRIMARY");
+
+            entity.ToTable("booking_documents");
+
+            entity.HasIndex(e => e.BookingId, "BookingID");
+            entity.HasIndex(e => e.UploadedBy, "UploadedBy");
+
+            entity.Property(e => e.DocumentId).HasColumnName("DocumentID");
+            entity.Property(e => e.BookingId).HasColumnName("BookingID");
+            entity.Property(e => e.FileUrl).HasMaxLength(255);
+            entity.Property(e => e.FileType).HasMaxLength(50);
+            entity.Property(e => e.UploadedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.Booking).WithMany(p => p.Documents)
+                .HasForeignKey(d => d.BookingId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_document_booking");
+
+            entity.HasOne(d => d.UploadedBySeller).WithMany(p => p.Documents)
+                .HasForeignKey(d => d.UploadedBy)
+                .HasConstraintName("fk_document_seller");
         });
 
         modelBuilder.Entity<Supplier>(entity =>
